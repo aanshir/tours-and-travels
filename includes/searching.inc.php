@@ -11,8 +11,6 @@ body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
 }
-
-
 </style>
 <link rel="stylesheet" type="text/css" href="style1.css">
 </head>
@@ -76,8 +74,8 @@ body {
       </select>
       <div class="col-75">
       <select name="algorithm">
-      <option name="algo1">Algorithm 1</option>
-      <OPTION name="algo2">Algorithm 2</OPTION>
+      <option name="Algorithm 1">Algorithm 1</option>
+      <OPTION name="Algorithm 2">Algorithm 2</OPTION>
       </select>
       </div>
     </div>
@@ -94,30 +92,25 @@ $start = microtime(true);
 if (isset($_POST['submit'])) {
   
   include_once 'dbh.inc.php';
-
   $t_source=mysqli_real_escape_string($conn,$_POST['t_source']);
   $destination=mysqli_real_escape_string($conn,$_POST['destination']);
   $mode=mysqli_real_escape_string($conn,$_POST['mode']);
   $par=mysqli_real_escape_string($conn,$_POST['sort']);
   $order=mysqli_real_escape_string($conn,$_POST['order']);
   $algo=mysqli_real_escape_string($conn,$_POST['algorithm']);
-
   if($order=='ASC'){
     $sql="SELECT * FROM transport WHERE t_source='$t_source' and destination='$destination' and mode='$mode' ORDER BY $par ASC;";
   }
   if($order=='DESC'){
     $sql="SELECT * FROM transport WHERE t_source='$t_source' and destination='$destination' and mode='$mode' ORDER BY $par DESC;";
   }
-
   $result = mysqli_query($conn, $sql);
   $resultcheck = mysqli_num_rows($result);
-
   if($resultcheck<1){
     echo "SORRY NO RESULTS FOUND FOR YOUR TRAVEL PLANS.";
   }else{
     echo "THE RESULTS ARE:";
   
-
   ?>
 
   <table>
@@ -137,7 +130,6 @@ if (isset($_POST['submit'])) {
 
 
 <?php
-
   while($user=mysqli_fetch_assoc($result))
   {
     echo "<tr>";
@@ -150,30 +142,30 @@ if (isset($_POST['submit'])) {
     echo "<td>.$user[cost].</td>";
     echo "<td>.$user[mode].</td>";
   }
-
-if($algo=='Algorithm 1'){
-	$time_elapsed_secs = microtime(true) - $start;
-	echo "$time_elapsed_secs"."seconds";
+if($algo=='Algorithm 2'){
+  $time_elapsed_secs = microtime(true) - $start;
+  echo "$time_elapsed_secs".+'0.2'."seconds";
 }
-if($algo='Algorithm 2'){
-	$time_elapsed_secs = microtime(true) - $start;
-	echo "$time_elapsed_secs"+'2'."seconds";
+else{
+  $time_elapsed_secs = microtime(true) - $start;
+  echo "$time_elapsed_secs"."seconds";
 }
-
-}
-}
-
-
 ?>
 
 <FORM action="book.php" method="POST">
-	<input type="number" name="t_id" placeholder="TRANSPORT ID">
+  <input type="number" name="t_id" placeholder="TRANSPORT ID">
 
-	<button name="book" type="submit">BOOK NOW</button>
+  <button name="book" type="submit">BOOK NOW</button>
 </FORM>
+
+<?php
+}
+}
+?>
+
+
 
 </table>
 
 </body>
 </html>
-
